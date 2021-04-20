@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gol_ret_msg.c                                      :+:      :+:    :+:   */
+/*   gol_multi_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jodufour <jodufour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 22:53:32 by jodufour          #+#    #+#             */
-/*   Updated: 2021/04/20 12:09:11 by jodufour         ###   ########.fr       */
+/*   Created: 2021/04/20 11:30:00 by jodufour          #+#    #+#             */
+/*   Updated: 2021/04/20 12:24:52 by jodufour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdarg.h>
 #include <stdlib.h>
 #include "game_of_life.h"
 
-void	gol_ret_msg(int ret)
+int	gol_multi_free(int ret, size_t n, ...)
 {
-	if (ret == COLORS_NOT_SUPPORTED)
-		printw("Error: Colors are not supported on you terminal\n");
-	else
+	void	*dent;
+	va_list	va;
+
+	va_start(va, n);
+	while (n--)
 	{
-		attron(COLOR_PAIR(ERR_MSG_COLOR));
-		if (ret == AC_ERRNO)
-			printw("Error: argument count is invalid\n");
-		else if (ret == MALLOC_ERRNO)
-			printw("Error: malloc failed\n");
-		attroff(COLOR_PAIR(ERR_MSG_COLOR));
+		dent = va_arg(va, void *);
+		free(dent);
 	}
-	gol_pause(NULL, 0, 0, NULL);
+	va_end(va);
+	return (ret);
 }
