@@ -6,14 +6,13 @@
 /*   By: jodufour <jodufour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 23:51:11 by jodufour          #+#    #+#             */
-/*   Updated: 2021/04/20 12:25:14 by jodufour         ###   ########.fr       */
+/*   Updated: 2021/04/20 14:18:47 by jodufour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
 #include <stdint.h>
 
-static bool	gol_isspace(char const c)
+static int	gol_isspace(char const c)
 {
 	return (c == '\f'
 		|| c == '\t'
@@ -23,7 +22,7 @@ static bool	gol_isspace(char const c)
 		|| c == ' ');
 }
 
-static bool	gol_isdigit(char const c)
+static int	gol_isdigit(char const c)
 {
 	return (c >= '0' && c <= '9');
 }

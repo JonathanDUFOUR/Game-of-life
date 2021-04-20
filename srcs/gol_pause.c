@@ -6,34 +6,43 @@
 /*   By: jodufour <jodufour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 23:15:40 by jodufour          #+#    #+#             */
-/*   Updated: 2021/04/20 12:32:25 by jodufour         ###   ########.fr       */
+/*   Updated: 2021/04/20 17:52:56 by jodufour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game_of_life.h"
 
-void	gol_pause(char *grid, uint32_t size, uint32_t width, MEVENT *event)
+static void	gol_get_input(char **grid, uint32_t size, uint32_t width,
+	MEVENT *event)
 {
-	int	ch;
-	int	x;
-	int	y;
+	uint32_t	x;
+	uint32_t	y;
+
+	x = event->x / 2;
+	y = event->y;
+	fprintf(stderr, "  real coords = {%d, %d}\n", event->x, event->y);
+	fprintf(stderr, "mapped coords = {%d, %d}\n", x, y);
+	if (x < width && y < (size / width))
+	{
+		grid[CURR][x + y * width] ^= 1;
+		grid[PREV][x + y * width] ^= 1;
+	}
+}
+
+int	gol_pause(char **grid, uint32_t size, uint32_t width, MEVENT *event)
+{
+	int			ch;
 
 	while (1)
 	{
 		ch = getch();
-		if (grid && event && ch == KEY_MOUSE)
-		{
-			if (getmouse(event) == OK)
-			{
-				x = event->x / 2;
-				y = event->y;
-				if (x < width && y < (size / width))
-					grid[x + y * width] ^= 1;
-			}
-		}
-		else if (ch == ' ')
+		if (grid && event && (ch == KEY_MOUSE) && (getmouse(event) == OK))
+			gol_get_input(grid, size, width, event);
+		else if (ch == ' ' || ch == 'Q' || ch == 'q')
 			break ;
-		gol_grid_draw(grid, size, width);
+		if (grid)
+			gol_grid_draw(grid[CURR], size, width);
 		refresh();
 	}
+	return (ch);
 }
