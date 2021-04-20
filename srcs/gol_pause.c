@@ -6,7 +6,7 @@
 /*   By: jodufour <jodufour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 23:15:40 by jodufour          #+#    #+#             */
-/*   Updated: 2021/04/20 17:52:56 by jodufour         ###   ########.fr       */
+/*   Updated: 2021/04/20 19:02:00 by jodufour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static void	gol_get_input(char **grid, uint32_t size, uint32_t width,
 
 	x = event->x / 2;
 	y = event->y;
-	fprintf(stderr, "  real coords = {%d, %d}\n", event->x, event->y);
-	fprintf(stderr, "mapped coords = {%d, %d}\n", x, y);
 	if (x < width && y < (size / width))
 	{
 		grid[CURR][x + y * width] ^= 1;

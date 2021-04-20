@@ -6,7 +6,7 @@
 /*   By: jodufour <jodufour@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 22:42:15 by jodufour          #+#    #+#             */
-/*   Updated: 2021/04/20 17:42:39 by jodufour         ###   ########.fr       */
+/*   Updated: 2021/04/20 20:29:34 by jodufour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,23 @@
 int	main(int ac, char **av)
 {
 	int			ret;
-	uint32_t	width;
-	uint32_t	height;
 
 	initscr();
 	if (has_colors() == FALSE)
-	{
-		gol_ret_msg(COLORS_NOT_SUPPORTED);
-		endwin();
-	}
-	gol_setup();
-	if (ac == 3)
-	{
-		ret = gol_run_game(gol_atou(av[1]), gol_atou(av[2]));
-		if (ret != SUCCESS)
-			gol_ret_msg(ret);
-	}
-	else if (ac == 1)
-	{
-		width = getmaxx(stdscr);
-		height = getmaxy(stdscr);
-		fprintf(stderr, "term size = {%3d, %3d}\n", width, height);
-		ret = gol_run_game(width / 2 - 1, height - 1);
-		if (ret != SUCCESS)
-			gol_ret_msg(ret);
-	}
+		ret = COLORS_NOT_SUPPORTED;
 	else
-		gol_ret_msg(AC_ERRNO);
+	{
+		gol_setup();
+		if (ac == 3)
+			ret = gol_run_game(gol_min(gol_atou(av[1]), 47), gol_atou(av[2]));
+		else if (ac == 1)
+			ret = gol_run_game(gol_min(getmaxx(stdscr) / 2, 47),
+					getmaxy(stdscr) - 1);
+		else
+			ret = AC_ERRNO;
+	}
+	if (ret != SUCCESS)
+		gol_ret_msg(ret);
 	endwin();
 	return (SUCCESS);
 }

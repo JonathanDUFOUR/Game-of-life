@@ -6,7 +6,7 @@
 #    By: jodufour <jodufour@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/19 22:37:10 by jodufour          #+#    #+#              #
-#    Updated: 2021/04/20 14:12:10 by jodufour         ###   ########.fr        #
+#    Updated: 2021/04/20 18:32:24 by jodufour         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ OBJD	=	objs/
 
 SRCS	=	\
 			main.c				\
+			gol_min.c			\
 			gol_atou.c			\
 			gol_setup.c			\
 			gol_pause.c			\
